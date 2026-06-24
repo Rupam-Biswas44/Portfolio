@@ -202,7 +202,7 @@ export default function ProjectsSection() {
         <section
             style={{
                 background: "#0a0a0a",
-                padding: "10rem 1rem",
+                padding: "clamp(4rem, 10vw, 10rem) 1rem",
                 position: "relative",
                 overflow: "hidden",
             }}
@@ -240,12 +240,12 @@ export default function ProjectsSection() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
-                style={{ textAlign: "center", marginBottom: "8rem", position: "relative", zIndex: 5 }}
+                style={{ textAlign: "center", marginBottom: "clamp(3rem, 8vw, 8rem)", position: "relative", zIndex: 5 }}
             >
                 <span style={{ color: "#9333ea", fontFamily: "monospace", letterSpacing: "0.5em", fontSize: "0.8rem", textTransform: "uppercase" }}>
                     Project Archives
                 </span>
-                <h2 style={{ fontSize: "5rem", fontWeight: 900, color: "#fff", margin: "1rem 0", letterSpacing: "-0.05em" }}>
+                <h2 style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)", fontWeight: 900, color: "#fff", margin: "1rem 0", letterSpacing: "-0.05em" }}>
                     CORE.<span style={{ color: "#00ffff" }}>BUILDS</span>
                 </h2>
             </motion.div>
@@ -255,8 +255,8 @@ export default function ProjectsSection() {
                     maxWidth: "1400px",
                     margin: "0 auto",
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))",
-                    gap: "2.5rem",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+                    gap: "1.5rem",
                     position: "relative",
                     zIndex: 5,
                 }}

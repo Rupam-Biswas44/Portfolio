@@ -47,10 +47,11 @@ function PaperCard({ paper, index }: { paper: (typeof papers)[0]; index: number 
                 background: "rgba(3,3,3,0.85)",
                 backdropFilter: "blur(20px)",
                 border: `1px solid ${hovered ? paper.color + "88" : "rgba(255,255,255,0.05)"}`,
-                padding: "3rem",
+                padding: "2rem",
                 display: "flex",
-                gap: "2.5rem",
-                alignItems: "center",
+                flexDirection: "column",
+                gap: "1.5rem",
+                alignItems: "flex-start",
                 transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                 cursor: "pointer",
                 overflow: "hidden",
@@ -137,15 +138,15 @@ function PaperCard({ paper, index }: { paper: (typeof papers)[0]; index: number 
                 transition={{ duration: 2, repeat: Infinity }}
                 style={{
                     flexShrink: 0,
-                    width: "6rem",
-                    height: "6rem",
+                    width: "4.5rem",
+                    height: "4.5rem",
                     background: "rgba(0,0,0,0.5)",
                     border: `2px solid ${paper.color}44`,
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "2.5rem",
+                    fontSize: "2rem",
                     transition: "all 0.4s ease",
                     zIndex: 1,
                     position: "relative",
@@ -203,10 +204,9 @@ function PaperCard({ paper, index }: { paper: (typeof papers)[0]; index: number 
 
                 <p style={{
                     color: "#9ca3af",
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.8rem, 2vw, 0.9rem)",
                     lineHeight: 1.7,
                     margin: 0,
-                    maxWidth: "600px"
                 }}>
                     {paper.abstract}
                 </p>
@@ -229,7 +229,7 @@ export default function ResearchSection() {
             id="research"
             style={{
                 background: "#000",
-                padding: "10rem 1rem",
+                padding: "clamp(4rem, 10vw, 10rem) 1rem",
                 position: "relative",
                 overflow: "hidden",
             }}
@@ -276,7 +276,7 @@ export default function ResearchSection() {
                 <span style={{ color: "#9333ea", fontFamily: "monospace", letterSpacing: "0.5em", fontSize: "0.8rem", textTransform: "uppercase" }}>
                     Academic Intelligence
                 </span>
-                <h2 style={{ fontSize: "5rem", fontWeight: 900, color: "#fff", margin: "1rem 0", letterSpacing: "-0.05em" }}>
+                <h2 style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)", fontWeight: 900, color: "#fff", margin: "1rem 0", letterSpacing: "-0.05em" }}>
                     PUB.<span style={{ color: "#00ffff" }}>LOGS</span>
                 </h2>
             </motion.div>

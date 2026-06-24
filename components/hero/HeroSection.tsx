@@ -28,7 +28,7 @@ function GlitchName() {
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    fontSize: "clamp(5rem, 14vw, 13rem)",
+                    fontSize: "clamp(3.5rem, 14vw, 13rem)",
                     fontWeight: 900,
                     color: "#00ffff",
                     opacity: glitching ? 0.8 : 0,
@@ -49,7 +49,7 @@ function GlitchName() {
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    fontSize: "clamp(5rem, 14vw, 13rem)",
+                    fontSize: "clamp(3.5rem, 14vw, 13rem)",
                     fontWeight: 900,
                     color: "#ff00ff",
                     opacity: glitching ? 0.7 : 0,
@@ -71,7 +71,7 @@ function GlitchName() {
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
                 style={{
                     display: "block",
-                    fontSize: "clamp(5rem, 14vw, 13rem)",
+                    fontSize: "clamp(3.5rem, 14vw, 13rem)",
                     fontWeight: 900,
                     color: "#fff",
                     letterSpacing: "-0.04em",
@@ -132,7 +132,7 @@ export default function HeroSection() {
         <section
             style={{
                 width: "100%",
-                height: "100vh",
+                minHeight: "100vh",
                 position: "relative",
                 overflow: "hidden",
                 background: "#000",
@@ -186,22 +186,9 @@ export default function HeroSection() {
             />
 
             {/* Main layout */}
-            <div
-                style={{
-                    position: "relative",
-                    zIndex: 10,
-                    width: "100%",
-                    maxWidth: "1400px",
-                    margin: "0 auto",
-                    padding: "0 2rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "2rem",
-                }}
-            >
+            <div className="hero-layout">
                 {/* Left — Text */}
-                <div style={{ flex: 1, maxWidth: "700px" }}>
+                <div className="hero-text">
                     {/* Pre-label */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -219,14 +206,15 @@ export default function HeroSection() {
                                 width: "2.5rem",
                                 height: "1px",
                                 background: "#00ffff",
+                                flexShrink: 0,
                             }}
                         />
                         <span
                             style={{
                                 fontFamily: "monospace",
-                                fontSize: "0.7rem",
+                                fontSize: "clamp(0.6rem, 1.5vw, 0.7rem)",
                                 color: "#00ffff",
-                                letterSpacing: "0.35em",
+                                letterSpacing: "0.25em",
                                 textTransform: "uppercase",
                             }}
                         >
@@ -243,21 +231,21 @@ export default function HeroSection() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
                         style={{
-                            fontSize: "clamp(5rem, 14vw, 13rem)",
+                            fontSize: "clamp(3.5rem, 14vw, 13rem)",
                             fontWeight: 900,
                             letterSpacing: "-0.04em",
                             lineHeight: 0.9,
                             color: "transparent",
                             WebkitTextStroke: "2px rgba(147,51,234,0.8)",
                             fontStyle: "italic",
-                            marginBottom: "2.5rem",
+                            marginBottom: "2rem",
                         }}
                     >
                         BISWAS
                     </motion.div>
 
                     {/* Subtitle stack */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "3rem" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "2.5rem" }}>
                         {[
                             { label: "MSc Data Science", val: "TU Dortmund University" },
                             { label: "Status", val: "Available for Werkstudent" },
@@ -271,12 +259,13 @@ export default function HeroSection() {
                                 style={{
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: "1rem",
+                                    gap: "0.75rem",
                                     fontFamily: "monospace",
-                                    fontSize: "0.75rem",
+                                    fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)",
+                                    flexWrap: "wrap",
                                 }}
                             >
-                                <span style={{ color: "#4b5563", letterSpacing: "0.1em", textTransform: "uppercase", width: "9rem", flexShrink: 0 }}>
+                                <span style={{ color: "#4b5563", letterSpacing: "0.1em", textTransform: "uppercase", minWidth: "7rem", flexShrink: 0 }}>
                                     {label}
                                 </span>
                                 <span style={{ color: "#9ca3af", letterSpacing: "0.05em" }}>{val}</span>
@@ -289,22 +278,23 @@ export default function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.3, duration: 0.6 }}
-                        style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
+                        style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}
                     >
                         <a
                             href="#projects"
                             style={{
-                                padding: "0.875rem 2.5rem",
+                                padding: "0.75rem 2rem",
                                 background: "#00ffff",
                                 color: "#000",
                                 fontFamily: "monospace",
-                                fontSize: "0.75rem",
-                                letterSpacing: "0.2em",
+                                fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)",
+                                letterSpacing: "0.15em",
                                 textTransform: "uppercase",
                                 textDecoration: "none",
                                 fontWeight: 700,
                                 borderRadius: "2px",
                                 transition: "all 0.3s ease",
+                                whiteSpace: "nowrap",
                             }}
                         >
                             View Projects
@@ -314,16 +304,17 @@ export default function HeroSection() {
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
-                                padding: "0.875rem 2rem",
+                                padding: "0.75rem 1.5rem",
                                 border: "1px solid #9333ea",
                                 color: "#9333ea",
                                 fontFamily: "monospace",
-                                fontSize: "0.75rem",
-                                letterSpacing: "0.2em",
+                                fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)",
+                                letterSpacing: "0.15em",
                                 textTransform: "uppercase",
                                 textDecoration: "none",
                                 borderRadius: "2px",
                                 transition: "all 0.3s ease",
+                                whiteSpace: "nowrap",
                             }}
                         >
                             GitHub
@@ -333,16 +324,17 @@ export default function HeroSection() {
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
-                                padding: "0.875rem 2rem",
+                                padding: "0.75rem 1.5rem",
                                 border: "1px solid #00ffff",
                                 color: "#00ffff",
                                 fontFamily: "monospace",
-                                fontSize: "0.75rem",
-                                letterSpacing: "0.2em",
+                                fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)",
+                                letterSpacing: "0.15em",
                                 textTransform: "uppercase",
                                 textDecoration: "none",
                                 borderRadius: "2px",
                                 transition: "all 0.3s ease",
+                                whiteSpace: "nowrap",
                             }}
                         >
                             LinkedIn
@@ -352,15 +344,10 @@ export default function HeroSection() {
 
                 {/* Right — Abstract Portrait */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9, x: 60 }}
-                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-                    style={{
-                        position: "relative",
-                        flexShrink: 0,
-                        width: "min(420px, 40vw)",
-                        height: "min(520px, 50vw)",
-                    }}
+                    className="hero-portrait-wrapper"
                 >
                     {/* Animated glow ring */}
                     <motion.div
@@ -420,7 +407,7 @@ export default function HeroSection() {
                         />
                     </div>
 
-                    {/* Floating data badges */}
+                    {/* Floating data badges — hidden on mobile via CSS */}
                     {[
                         { text: "Python", top: "10%", left: "-15%", color: "#00ffff" },
                         { text: ".NET Core", top: "30%", right: "-18%", color: "#9333ea" },
@@ -432,6 +419,7 @@ export default function HeroSection() {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 1.5 + i * 0.2, duration: 0.5, type: "spring" }}
+                            className="hero-badge"
                             style={{
                                 position: "absolute",
                                 ...pos,
@@ -461,7 +449,7 @@ export default function HeroSection() {
                     left: 0,
                     right: 0,
                     zIndex: 10,
-                    padding: "1rem 2rem",
+                    padding: "1rem 1.5rem",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-end",
@@ -473,14 +461,14 @@ export default function HeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 2 }}
                 >
-                    <p style={{ fontFamily: "monospace", fontSize: "0.6rem", color: "#00ffff", letterSpacing: "0.3em", margin: 0, textTransform: "uppercase" }}>
+                    <p style={{ fontFamily: "monospace", fontSize: "0.55rem", color: "#00ffff", letterSpacing: "0.25em", margin: 0, textTransform: "uppercase" }}>
                         Neural Core Active
                     </p>
                     <motion.div
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 2, ease: "circOut", delay: 2.2 }}
-                        style={{ width: "8rem", height: "1px", background: "#00ffff", transformOrigin: "left", marginTop: "0.35rem" }}
+                        style={{ width: "6rem", height: "1px", background: "#00ffff", transformOrigin: "left", marginTop: "0.35rem" }}
                     />
                 </motion.div>
 
@@ -490,10 +478,10 @@ export default function HeroSection() {
                     transition={{ duration: 2, repeat: Infinity }}
                     style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}
                 >
-                    <span style={{ fontFamily: "monospace", fontSize: "0.55rem", color: "#4b5563", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+                    <span style={{ fontFamily: "monospace", fontSize: "0.5rem", color: "#4b5563", letterSpacing: "0.2em", textTransform: "uppercase" }}>
                         Scroll
                     </span>
-                    <div style={{ width: "1px", height: "3rem", background: "linear-gradient(to bottom, #4b5563, transparent)" }} />
+                    <div style={{ width: "1px", height: "2.5rem", background: "linear-gradient(to bottom, #4b5563, transparent)" }} />
                 </motion.div>
 
                 <motion.div
@@ -506,13 +494,60 @@ export default function HeroSection() {
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 2, ease: "circOut", delay: 2.2 }}
-                        style={{ width: "8rem", height: "1px", background: "#9333ea", transformOrigin: "right", marginBottom: "0.35rem", marginLeft: "auto" }}
+                        style={{ width: "6rem", height: "1px", background: "#9333ea", transformOrigin: "right", marginBottom: "0.35rem", marginLeft: "auto" }}
                     />
-                    <p style={{ fontFamily: "monospace", fontSize: "0.6rem", color: "#9333ea", letterSpacing: "0.3em", margin: 0, textTransform: "uppercase" }}>
+                    <p style={{ fontFamily: "monospace", fontSize: "0.55rem", color: "#9333ea", letterSpacing: "0.25em", margin: 0, textTransform: "uppercase" }}>
                         System Optimal
                     </p>
                 </motion.div>
             </div>
+
+            <style>{`
+                .hero-layout {
+                    position: relative;
+                    z-index: 10;
+                    width: 100%;
+                    max-width: 1400px;
+                    margin: 0 auto;
+                    padding: 6rem 1.25rem 8rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 3rem;
+                }
+                .hero-text {
+                    width: 100%;
+                }
+                .hero-portrait-wrapper {
+                    position: relative;
+                    flex-shrink: 0;
+                    width: min(280px, 70vw);
+                    height: min(340px, 85vw);
+                }
+                .hero-badge {
+                    display: none;
+                }
+                @media (min-width: 768px) {
+                    .hero-layout {
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 2rem;
+                        min-height: 100vh;
+                    }
+                    .hero-text {
+                        flex: 1;
+                        max-width: 700px;
+                    }
+                    .hero-portrait-wrapper {
+                        width: min(420px, 38vw);
+                        height: min(520px, 47vw);
+                    }
+                    .hero-badge {
+                        display: block;
+                    }
+                }
+            `}</style>
         </section>
     );
 }

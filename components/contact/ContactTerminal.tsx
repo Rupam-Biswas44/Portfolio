@@ -51,7 +51,7 @@ function Line({ line, delay, started }: { line: (typeof terminalLines)[0], delay
             transition={{ duration: 0.15 }}
             style={{
                 fontFamily: "monospace",
-                fontSize: "0.85rem",
+                fontSize: "clamp(0.7rem, 2vw, 0.85rem)",
                 lineHeight: 1.8,
                 color: glitch ? "#ff00ff" : line.color,
                 letterSpacing: "0.05em",
@@ -80,7 +80,7 @@ export default function ContactTerminal() {
             id="contact"
             style={{
                 background: "#000",
-                padding: "10rem 1rem",
+                padding: "clamp(4rem, 10vw, 10rem) 1rem",
                 position: "relative",
                 overflow: "hidden",
             }}
@@ -135,7 +135,7 @@ export default function ContactTerminal() {
                 <span style={{ color: "#00ffff", fontFamily: "monospace", letterSpacing: "0.5em", fontSize: "0.8rem", textTransform: "uppercase" }}>
                     Encrypted Uplink
                 </span>
-                <h2 style={{ fontSize: "5rem", fontWeight: 900, color: "#fff", margin: "1rem 0", letterSpacing: "-0.05em" }}>
+                <h2 style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)", fontWeight: 900, color: "#fff", margin: "1rem 0", letterSpacing: "-0.05em" }}>
                     SYS.<span style={{ color: "transparent", WebkitTextStroke: "2px #9333ea" }}>TALK</span>
                 </h2>
             </motion.div>
@@ -230,7 +230,7 @@ export default function ContactTerminal() {
                     />
 
                     {/* Terminal Body */}
-                    <div style={{ padding: "2.5rem", minHeight: "500px", position: "relative", zIndex: 5 }}>
+                    <div style={{ padding: "clamp(1rem, 4vw, 2.5rem)", minHeight: "400px", position: "relative", zIndex: 5 }}>
                         {terminalLines.map((line, i) => (
                             <Line key={i} line={line} delay={i * 2} started={inView} />
                         ))}
