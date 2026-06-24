@@ -17,7 +17,7 @@ const skillCategories = [
     {
         title: "ENGINES & FRAMEWORKS",
         color: "#9333ea",
-        skills: [".NET Core", "FastAPI", "TensorFlow", "PyTorch", "Keras", "SignalR", "Docker", "Git"],
+        skills: [".NET Core", "FastAPI", "TensorFlow", "PyTorch", "Keras", "SignalR", "Docker", "Git", "Power BI", "Tableau"],
     },
     {
         title: "NEURAL ARCHITECTURES",
