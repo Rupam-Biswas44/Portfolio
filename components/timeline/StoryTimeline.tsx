@@ -16,7 +16,7 @@ const journey = [
         color: "#00ffff",
     },
     {
-        year: "2020",
+        year: "2020-2024",
         title: "GUJARAT TECHNOLOGICAL UNIVERSITY",
         subtitle: "GOVT. SCHOLARSHIP // B.E. COMP ENG",
         desc: "Acquired Govt. ICCR Scholarship. Computer Engineering fundamentals and research optimization. Final grade optimized to 1.5 German Equivalent.",
@@ -32,6 +32,14 @@ const journey = [
         color: "#00ffff",
     },
     {
+        year: "JUN-JUL 2023",
+        title: "MAXGEN TECHNOLOGIES",
+        subtitle: "MACHINE LEARNING INTERN // PVT. LTD.",
+        desc: "Summer internship in Machine Learning at Maxgen Technologies PVT. LTD. Applied Python, Pandas, NumPy for data analysis and ML model development.",
+        icon: "🧠",
+        color: "#9333ea",
+    },
+    {
         year: "JAN 2024",
         title: "SAP INDIA",
         subtitle: "DATA SCIENCE INTERN // CODEUNNATI",
@@ -40,7 +48,7 @@ const journey = [
         color: "#9333ea",
     },
     {
-        year: "FEB 2025",
+        year: "FEB 2025-APR 2026",
         title: "DATA EDGE LTD",
         subtitle: "ASSOCIATE SOFTWARE ENGINEER",
         desc: "Deployment of Real-Time Bank Monitoring (Trust Bank PLC). ATM Reconciliation systems (BRAC Bank) maintained in production.",
