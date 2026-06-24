@@ -38,7 +38,7 @@ export default function Home() {
           letterSpacing: "0.1em",
         }}
       >
-        <span style={{ color: "#00ffff" }}>RUPAM BISWAS</span> © 2026 — Built with Next.js + Three.js + Framer Motion
+        <span style={{ color: "#00ffff" }}>RUPAM BISWAS</span> © 2026 All Rights Reserved
       </footer>
     </main>
   );

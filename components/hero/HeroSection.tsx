@@ -218,7 +218,7 @@ export default function HeroSection() {
                                 textTransform: "uppercase",
                             }}
                         >
-                            <ScrambleText text="AI Engineer • Data Science" delay={0.5} />
+                            <ScrambleText text="AI Engineer • Data Science • Software Developer" delay={0.5} />
                         </span>
                     </motion.div>
 

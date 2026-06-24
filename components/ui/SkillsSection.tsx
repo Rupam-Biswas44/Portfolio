@@ -27,7 +27,7 @@ const skillCategories = [
     {
         title: "DOMAIN PROTOCOLS",
         color: "#9333ea",
-        skills: ["Medical Imaging", "Fintech Fraud Detection", "Semantic Search", "Real-Time Monitoring"],
+        skills: ["Machine Learning", "Deep Learning", "Software Development", "Medical Imaging", "Fintech Fraud Detection", "Semantic Search", "Real-Time Monitoring"],
     },
 ];
 
