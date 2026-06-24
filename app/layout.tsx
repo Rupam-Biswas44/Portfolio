@@ -14,8 +14,26 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "Rupam Biswas | AI Engineer & Data Scientist",
-  description: "Personal portfolio of Rupam Biswas - AI Engineer, Data Scientist, and Software Engineer specializing in Banking Systems and Research.",
+  title: "Rupam Biswas | Data Scientist & AI Engineer | M.Sc. TU Dortmund, Germany",
+  description: "Portfolio of Rupam Biswas — M.Sc. Data Science student at TU Dortmund, Germany. AI Engineer, Data Scientist & Software Engineer specializing in Machine Learning, LLMs, and Banking Systems. Seeking Werkstudent positions in Germany.",
+  keywords: [
+    "Rupam Biswas",
+    "Data Scientist",
+    "AI Engineer",
+    "M.Sc. Data Science",
+    "TU Dortmund",
+    "Germany",
+    "Machine Learning",
+    "Werkstudent",
+    "Deep Learning",
+    "LLM",
+    "Software Engineer",
+  ],
+  openGraph: {
+    title: "Rupam Biswas | Data Scientist & AI Engineer | TU Dortmund, Germany",
+    description: "M.Sc. Data Science at TU Dortmund. AI Engineer specializing in ML, LLMs, and Banking Systems. Available for Werkstudent in Germany.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

@@ -26,8 +26,8 @@ const journey = [
     {
         year: "2022-2024",
         title: "IOT SPECIALIZATION",
-        subtitle: "MINOR DEGREE // ADDITIONAL CORE",
-        desc: "Completed a specialized two-year minor degree in Internet of Things alongside regular undergraduate studies.",
+        subtitle: "MINOR DEGREE // 28.4 ADDITIONAL ECTS",
+        desc: "Completed a specialized two-year minor degree in Internet of Things alongside regular undergraduate studies, earning 28.4 additional ECTS. Gained hands-on experience in how IoT systems integrate with AI — sensor data pipelines, edge inference, and intelligent automation.",
         icon: "🔌",
         color: "#00ffff",
     },
@@ -40,7 +40,7 @@ const journey = [
         color: "#9333ea",
     },
     {
-        year: "JAN 2024",
+        year: "JAN 2024-MAY 2024",
         title: "SAP INDIA",
         subtitle: "DATA SCIENCE INTERN // CODEUNNATI",
         desc: "Deep analysis layer integrated. IoT, ML, and Image Processing pipelines developed for industry datasets.",
@@ -56,7 +56,7 @@ const journey = [
         color: "#00ffff",
     },
     {
-        year: "2026",
+        year: "2025-2026",
         title: "RESEARCH LAB",
         subtitle: "LUNGNET-CAM // FEDERATED LEARNING",
         desc: "Neural network optimization for oncology. IEEE QPAIN publications. Attention-based medical imaging frameworks.",
