@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 const NeuralNetworkCanvas = dynamic(() => import("../particles/NeuralNetworkCanvas"), { ssr: false });
 
@@ -10,13 +11,26 @@ const NeuralNetworkCanvas = dynamic(() => import("../particles/NeuralNetworkCanv
 
 const projects = [
     {
+        title: "AI POLICY CHATBOT",
+        tagline: "FINANCIAL QA AGENT",
+        desc: "Interactive chatbot answering questions on financial policy docs. FAISS + Sentence Transformers for semantic search, with optional OpenAI GPT orchestration.",
+        tech: ["Python", "Streamlit", "FAISS", "OpenAI", "RAG"],
+        color: "#00ffff",
+        id: "PROT-CHAT-05",
+        status: "DEPLOYED",
+        link: "https://github.com/Rupam-Biswas44/AI-Policy-Chatbot.git",
+        image: "/proj_ai_chatbot.png"
+    },
+    {
         title: "TRUST BANK MONITOR",
         tagline: "REAL-TIME TRANSACTION KERNEL",
         desc: "Critical production system for Trust Bank PLC. Managed real-time data flow between Linux backends and .NET frontends. Zero-latency monitoring via SignalR.",
         tech: ["Python", ".NET Core", "SQL Server", "SignalR", "Linux"],
         color: "#00ffff",
         id: "PROT-BANK-01",
-        status: "PRODUCTION_LIVE"
+        status: "PRODUCTION_LIVE",
+        link: "https://github.com/Rupam-Biswas44/Trust-Bank-Monitor.git", // Assuming link based on others
+        image: "/proj_bank_monitor.png"
     },
     {
         title: "MULTILINGUAL RAG",
@@ -25,7 +39,20 @@ const projects = [
         tech: ["FastAPI", "OpenAI", "FAISS", "Vector DB", "RAG"],
         color: "#9333ea",
         id: "PROT-RAG-02",
-        status: "DEPLOYED"
+        status: "DEPLOYED",
+        link: "https://github.com/Rupam-Biswas44/Multilingual-Retrieval-Augmented-Generation-RAG-System.git",
+        image: "/proj_multilingual_rag.png"
+    },
+    {
+        title: "CREDIT CARD FRAUD",
+        tagline: "ANOMALY DETECTION",
+        desc: "Neural anomaly detection system for credit card transactions identifying fraudulent patterns in high-dimensional financial data spaces.",
+        tech: ["Jupyter", "Machine Learning", "Data Science", "Python"],
+        color: "#9333ea",
+        id: "PROT-FRD-06",
+        status: "RESEARCH",
+        link: "https://github.com/Rupam-Biswas44/Credit-Card-Fraud.git",
+        image: "/proj_fraud_detection.png"
     },
     {
         title: "PLANT DISEASE AI",
@@ -34,7 +61,20 @@ const projects = [
         tech: ["TensorFlow", "Keras", "LLaMA", "Streamlit"],
         color: "#00ffff",
         id: "PROT-AGRI-03",
-        status: "ALPHA_BUILD"
+        status: "ALPHA_BUILD",
+        link: "https://github.com/Rupam-Biswas44/Plant-Disease-AI.git", // Assuming link
+        image: "/proj_plant_disease.png"
+    },
+    {
+        title: "SALARY PREDICTION",
+        tagline: "ML REGRESSION MODEL",
+        desc: "Predictive machine learning application utilizing regression algorithms to forecast salary ranges based on multiple professional features.",
+        tech: ["Python", "HTML", "Flask", "Machine Learning"],
+        color: "#00ffff",
+        id: "PROT-SAL-07",
+        status: "DEPLOYED",
+        link: "https://github.com/Rupam-Biswas44/SALARY-PREDICTION.git",
+        image: "/proj_salary_prediction.png"
     },
     {
         title: "GENAI SEARCH",
@@ -43,7 +83,9 @@ const projects = [
         tech: ["Hugging Face", "Transformers", "Attention", "LLMs"],
         color: "#9333ea",
         id: "PROT-SRCH-04",
-        status: "RESEARCH"
+        status: "RESEARCH",
+        link: "https://github.com/Rupam-Biswas44/Local-Search-Engine.git",
+        image: "/proj_genai_search.png"
     },
 ];
 
@@ -90,7 +132,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
             <motion.div
                 style={{ rotateX, rotateY, height: "100%", position: "relative", transformStyle: "preserve-3d" }}
             >
-                {/* Card base */}
+                {/* Card base with hover image integration */}
                 <div style={{
                     position: "absolute",
                     inset: 0,
@@ -100,7 +142,27 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
                     borderRadius: "1.5rem",
                     transition: "border-color 0.3s ease",
                     zIndex: -1,
-                }} />
+                    overflow: "hidden"
+                }}>
+                    <div style={{
+                        position: "absolute",
+                        inset: 0,
+                        opacity: hovered ? 0.35 : 0.05,
+                        transition: "opacity 0.5s ease",
+                        zIndex: 0,
+                        WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
+                        maskImage: "linear-gradient(to bottom, black 0%, transparent 100%)"
+                    }}>
+                        {project.image && (
+                            <Image
+                                src={project.image}
+                                alt={project.title}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                            />
+                        )}
+                    </div>
+                </div>
 
                 {/* Plasma burst on hover */}
                 <motion.div
@@ -172,7 +234,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
 
                     <p style={{ color: "#9ca3af", fontSize: "0.9rem", lineHeight: 1.7, marginBottom: "2rem", flex: 1 }}>{project.desc}</p>
 
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "auto" }}>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "auto", marginBottom: "1.5rem" }}>
                         {project.tech.map((t, ti) => (
                             <motion.span
                                 key={t}
@@ -191,6 +253,34 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
                             </motion.span>
                         ))}
                     </div>
+                    {project.link && (
+                        <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                                color: project.color,
+                                textDecoration: "none",
+                                fontFamily: "monospace",
+                                fontSize: "0.75rem",
+                                fontWeight: 700,
+                                letterSpacing: "0.15em",
+                                textTransform: "uppercase",
+                                transition: "all 0.3s ease",
+                                padding: "0.8rem 1.5rem",
+                                border: `1px solid ${project.color}`,
+                                borderRadius: "4px",
+                                width: "max-content",
+                                background: hovered ? project.color + "22" : "transparent",
+                                boxShadow: hovered ? `0 0 15px ${project.color}44` : "none"
+                            }}>
+                            <span>VIEW SOURCE</span>
+                            <span>→</span>
+                        </a>
+                    )}
                 </div>
             </motion.div>
         </motion.div>
