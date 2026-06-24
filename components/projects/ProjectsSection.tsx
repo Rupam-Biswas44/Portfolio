@@ -24,11 +24,11 @@ const projects = [
     {
         title: "TRUST BANK MONITOR",
         tagline: "REAL-TIME TRANSACTION KERNEL",
-        desc: "Critical production system for Trust Bank PLC. Managed real-time data flow between Linux backends and .NET frontends. Zero-latency monitoring via SignalR.",
+        desc: "Live enterprise system deployed at Trust Bank PLC & BRAC Bank. Managed real-time transaction data flow between Linux backends and .NET frontends with zero-latency monitoring via SignalR. ATM reconciliation pipelines maintained in production. Source code is proprietary — NDA protected.",
         tech: ["Python", ".NET Core", "SQL Server", "SignalR", "Linux"],
         color: "#00ffff",
         id: "PROT-BANK-01",
-        status: "PRODUCTION_LIVE",
+        status: "CONFIDENTIAL // NDA",
         image: "/proj_bank_monitor.png"
     },
     {
