@@ -69,71 +69,117 @@ export default function AIChatbot() {
 
     return (
         <>
-            {/* Floating Button */}
-            <motion.button
-                id="ask-rupam-chatbot-btn"
-                onClick={() => { setOpen(true); setPulsing(false); }}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
+            {/* ── Floating Action Button (Chatbot trigger) ── */}
+            <div
                 style={{
                     position: "fixed",
-                    bottom: "2rem",
-                    right: "2rem",
+                    bottom: "1.75rem",
+                    right: "1.75rem",
                     zIndex: 999,
                     display: open ? "none" : "flex",
+                    flexDirection: "column",
                     alignItems: "center",
-                    gap: "0.65rem",
-                    padding: "0.75rem 1.4rem",
-                    background: "rgba(0,0,0,0.92)",
-                    border: "1px solid #00ffff",
-                    color: "#00ffff",
-                    fontFamily: "monospace",
-                    fontSize: "0.72rem",
-                    letterSpacing: "0.18em",
-                    cursor: "pointer",
-                    borderRadius: "4px",
-                    boxShadow: pulsing
-                        ? "0 0 0 0 rgba(0,255,255,0.6)"
-                        : "0 0 20px rgba(0,255,255,0.3), 0 0 40px rgba(0,255,255,0.1)",
-                    backdropFilter: "blur(12px)",
+                    gap: "0.5rem",
                 }}
-                animate={pulsing ? {
-                    boxShadow: [
-                        "0 0 0 0 rgba(0,255,255,0.6)",
-                        "0 0 0 14px rgba(0,255,255,0)",
-                        "0 0 0 0 rgba(0,255,255,0)",
-                    ],
-                } : {}}
-                transition={pulsing ? { duration: 1.5, repeat: Infinity } : {}}
             >
-                {/* AI icon */}
+                {/* Tooltip label — always visible, pulses until clicked */}
                 <motion.div
-                    animate={{ rotate: [0, 360] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={pulsing ? { opacity: [0.7, 1, 0.7], y: 0 } : { opacity: 1, y: 0 }}
+                    transition={pulsing ? { duration: 2, repeat: Infinity } : { duration: 0.4 }}
                     style={{
-                        width: "1.1rem",
-                        height: "1.1rem",
-                        border: "1.5px solid #00ffff",
-                        borderTopColor: "transparent",
+                        background: "rgba(0,0,0,0.9)",
+                        border: "1px solid rgba(0,255,255,0.3)",
+                        color: "#00ffff",
+                        fontFamily: "monospace",
+                        fontSize: "0.55rem",
+                        letterSpacing: "0.15em",
+                        padding: "0.3rem 0.75rem",
+                        borderRadius: "3px",
+                        whiteSpace: "nowrap",
+                        pointerEvents: "none",
+                        backdropFilter: "blur(8px)",
+                    }}
+                >
+                    ✦ ASK RUPAM AI
+                </motion.div>
+
+                {/* Main circular button */}
+                <motion.button
+                    id="ask-rupam-chatbot-btn"
+                    onClick={() => { setOpen(true); setPulsing(false); }}
+                    whileHover={{ scale: 1.12 }}
+                    whileTap={{ scale: 0.92 }}
+                    style={{
+                        position: "relative",
+                        width: "64px",
+                        height: "64px",
                         borderRadius: "50%",
+                        background: "radial-gradient(circle at 35% 35%, #0ff5ff18, #000)",
+                        border: "2px solid #00ffff",
+                        boxShadow: "0 0 24px rgba(0,255,255,0.45), 0 0 60px rgba(0,255,255,0.12), inset 0 0 20px rgba(0,255,255,0.05)",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                         flexShrink: 0,
                     }}
-                />
-                {cb.title}
-                {/* Online dot */}
-                <motion.div
-                    animate={{ opacity: [1, 0.3, 1] }}
-                    transition={{ duration: 1.2, repeat: Infinity }}
-                    style={{
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        background: "#4ade80",
-                        boxShadow: "0 0 6px #4ade80",
-                        flexShrink: 0,
-                    }}
-                />
-            </motion.button>
+                    animate={pulsing ? {
+                        boxShadow: [
+                            "0 0 24px rgba(0,255,255,0.45), 0 0 60px rgba(0,255,255,0.12)",
+                            "0 0 40px rgba(0,255,255,0.8), 0 0 90px rgba(0,255,255,0.3)",
+                            "0 0 24px rgba(0,255,255,0.45), 0 0 60px rgba(0,255,255,0.12)",
+                        ],
+                    } : {}}
+                    transition={pulsing ? { duration: 2, repeat: Infinity } : {}}
+                >
+                    {/* Outer pulsing ring */}
+                    {pulsing && (
+                        <motion.div
+                            animate={{ scale: [1, 1.6, 1.6], opacity: [0.6, 0, 0] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            style={{
+                                position: "absolute",
+                                inset: "-6px",
+                                borderRadius: "50%",
+                                border: "2px solid #00ffff",
+                                pointerEvents: "none",
+                            }}
+                        />
+                    )}
+                    {/* Second pulsing ring (offset) */}
+                    {pulsing && (
+                        <motion.div
+                            animate={{ scale: [1, 1.45, 1.45], opacity: [0.4, 0, 0] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: 0.4 }}
+                            style={{
+                                position: "absolute",
+                                inset: "-3px",
+                                borderRadius: "50%",
+                                border: "1px solid rgba(0,255,255,0.5)",
+                                pointerEvents: "none",
+                            }}
+                        />
+                    )}
+
+                    {/* Brain / AI icon */}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00ffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2a6 6 0 0 0-6 6c0 2.4 1.4 4.5 3.5 5.5V16h5v-2.5c2.1-1 3.5-3.1 3.5-5.5a6 6 0 0 0-6-6z"/>
+                            <path d="M8.5 16h7M10 19h4M11 22h2"/>
+                            <circle cx="9.5" cy="8.5" r="0.8" fill="#00ffff"/>
+                            <circle cx="14.5" cy="8.5" r="0.8" fill="#00ffff"/>
+                        </svg>
+                        {/* Online status dot */}
+                        <motion.div
+                            animate={{ opacity: [1, 0.3, 1] }}
+                            transition={{ duration: 1.2, repeat: Infinity }}
+                            style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 8px #4ade80" }}
+                        />
+                    </div>
+                </motion.button>
+            </div>
+
 
             {/* Chat Panel */}
             <AnimatePresence>
