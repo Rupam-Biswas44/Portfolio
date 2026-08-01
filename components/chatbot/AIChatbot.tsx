@@ -17,28 +17,21 @@ export default function AIChatbot() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
-    const [pulsing, setPulsing] = useState(true);
     const [avatarVisible, setAvatarVisible] = useState(false);
-    const [avatarDismissed, setAvatarDismissed] = useState(false);
+    const [bubbleDismissed, setBubbleDismissed] = useState(false);
     const [typedText, setTypedText] = useState("");
     const bottomRef = useRef<HTMLDivElement>(null);
     const BUBBLE_TEXT = "Got a question? I know everything about Rupam 🧠";
 
-    // Stop initial pulse after 8s
+    // Wake up avatar after 1.5 seconds
     useEffect(() => {
-        const t = setTimeout(() => setPulsing(false), 8000);
+        const t = setTimeout(() => setAvatarVisible(true), 1500);
         return () => clearTimeout(t);
     }, []);
 
-    // Wake up avatar after 3 seconds
+    // Typewriter effect — runs once when avatar appears
     useEffect(() => {
-        const t = setTimeout(() => setAvatarVisible(true), 3000);
-        return () => clearTimeout(t);
-    }, []);
-
-    // Typewriter effect for bubble text
-    useEffect(() => {
-        if (!avatarVisible || avatarDismissed) return;
+        if (!avatarVisible || bubbleDismissed) return;
         let i = 0;
         setTypedText("");
         const interval = setInterval(() => {
@@ -47,7 +40,7 @@ export default function AIChatbot() {
             if (i >= BUBBLE_TEXT.length) clearInterval(interval);
         }, 35);
         return () => clearInterval(interval);
-    }, [avatarVisible, avatarDismissed]);
+    }, [avatarVisible]);
 
     useEffect(() => {
         if (messages.length > 0 || loading) {
@@ -93,96 +86,97 @@ export default function AIChatbot() {
     return (
         <>
 
-            {/* ═══════════════ AVATAR WAKE-UP ═══════════════ */}
+            {/* ═══════════════ PERMANENT AVATAR ═══════════════
+                 - Slides in once on first load
+                 - Always visible when chat is closed
+                 - Speech bubble can be dismissed independently
+            ═════════════════════════════════════════════════ */}
             <AnimatePresence>
-                {!open && avatarVisible && !avatarDismissed && (
+                {!open && avatarVisible && (
                     <motion.div
                         key="avatar-widget"
-                        initial={{ y: 120, opacity: 0 }}
+                        initial={{ y: 140, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: 120, opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 280, damping: 22 }}
+                        exit={{ y: 140, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 260, damping: 24 }}
                         style={{
                             position: "fixed",
-                            bottom: "1.5rem",
-                            right: "1.5rem",
+                            bottom: "1rem",
+                            right: "1.25rem",
                             zIndex: 999,
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "flex-end",
-                            gap: "0.6rem",
+                            gap: "0.5rem",
                             pointerEvents: "none",
                         }}
                     >
-                        {/* Speech bubble */}
+                        {/* Speech bubble — dismissable independently */}
+                        <AnimatePresence>
+                            {!bubbleDismissed && (
+                                <motion.div
+                                    key="speech-bubble"
+                                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                                    transition={{ delay: 0.6, type: "spring", stiffness: 300, damping: 20 }}
+                                    style={{
+                                        background: "rgba(3,3,14,0.97)",
+                                        border: "1px solid rgba(0,255,255,0.35)",
+                                        borderRadius: "12px 12px 4px 12px",
+                                        padding: "0.75rem 1.25rem 0.75rem 1rem",
+                                        maxWidth: "220px",
+                                        position: "relative",
+                                        boxShadow: "0 8px 32px rgba(0,0,0,0.7), 0 0 20px rgba(0,255,255,0.1)",
+                                        backdropFilter: "blur(16px)",
+                                        pointerEvents: "auto",
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={() => setOpen(true)}
+                                >
+                                    {/* Dismiss bubble only */}
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setBubbleDismissed(true); }}
+                                        style={{
+                                            position: "absolute",
+                                            top: "0.3rem",
+                                            right: "0.4rem",
+                                            background: "none",
+                                            border: "none",
+                                            color: "#475569",
+                                            fontSize: "0.65rem",
+                                            cursor: "pointer",
+                                            lineHeight: 1,
+                                            padding: "0.1rem 0.25rem",
+                                        }}
+                                    >✕</button>
+
+                                    <div style={{ fontFamily: "monospace", fontSize: "0.48rem", color: "#00ffff", letterSpacing: "0.2em", marginBottom: "0.4rem", opacity: 0.7 }}>
+                                        RUPAM.AI
+                                    </div>
+                                    <p style={{ fontFamily: "monospace", fontSize: "0.7rem", color: "#e2e8f0", lineHeight: 1.55, margin: 0 }}>
+                                        {typedText}
+                                        <motion.span
+                                            animate={{ opacity: [1, 0] }}
+                                            transition={{ duration: 0.6, repeat: Infinity }}
+                                            style={{ color: "#00ffff" }}
+                                        >▌</motion.span>
+                                    </p>
+                                    <div style={{ fontFamily: "monospace", fontSize: "0.48rem", color: "#00ffff", marginTop: "0.5rem", opacity: 0.55 }}>
+                                        tap to chat →
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {/* Avatar body — always visible, click to open chat */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.8, y: 8 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 20 }}
-                            style={{
-                                background: "rgba(3,3,14,0.95)",
-                                border: "1px solid rgba(0,255,255,0.35)",
-                                borderRadius: "12px 12px 4px 12px",
-                                padding: "0.75rem 1rem",
-                                maxWidth: "220px",
-                                position: "relative",
-                                boxShadow: "0 8px 32px rgba(0,0,0,0.6), 0 0 20px rgba(0,255,255,0.08)",
-                                backdropFilter: "blur(16px)",
-                                pointerEvents: "auto",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => { setOpen(true); setAvatarDismissed(true); }}
+                            style={{ display: "flex", alignItems: "flex-end", pointerEvents: "auto", cursor: "pointer" }}
+                            onClick={() => setOpen(true)}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            {/* Dismiss X */}
-                            <button
-                                onClick={(e) => { e.stopPropagation(); setAvatarDismissed(true); }}
-                                style={{
-                                    position: "absolute",
-                                    top: "0.35rem",
-                                    right: "0.4rem",
-                                    background: "none",
-                                    border: "none",
-                                    color: "#475569",
-                                    fontSize: "0.7rem",
-                                    cursor: "pointer",
-                                    lineHeight: 1,
-                                    padding: "0.1rem 0.25rem",
-                                }}
-                            >✕</button>
-
-                            {/* Who's talking label */}
-                            <div style={{ fontFamily: "monospace", fontSize: "0.5rem", color: "#00ffff", letterSpacing: "0.2em", marginBottom: "0.4rem", opacity: 0.7 }}>
-                                RUPAM.AI
-                            </div>
-
-                            {/* Typewriter text */}
-                            <p style={{ fontFamily: "monospace", fontSize: "0.72rem", color: "#e2e8f0", lineHeight: 1.5, margin: 0 }}>
-                                {typedText}
-                                <motion.span
-                                    animate={{ opacity: [1, 0] }}
-                                    transition={{ duration: 0.6, repeat: Infinity }}
-                                    style={{ color: "#00ffff" }}
-                                >▌</motion.span>
-                            </p>
-
-                            {/* CTA hint */}
-                            <div style={{ fontFamily: "monospace", fontSize: "0.5rem", color: "#00ffff", marginTop: "0.5rem", opacity: 0.6 }}>
-                                tap to chat →
-                            </div>
-                        </motion.div>
-
-                        {/* Avatar body */}
-                        <motion.div
-                            style={{
-                                display: "flex",
-                                alignItems: "flex-end",
-                                gap: "0",
-                                pointerEvents: "auto",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => { setOpen(true); setAvatarDismissed(true); }}
-                        >
-                            {/* Waving arm (left side) */}
+                            {/* Waving arm */}
                             <motion.div
                                 animate={{ rotate: [-10, 30, -10] }}
                                 transition={{ duration: 0.7, repeat: 5, ease: "easeInOut" }}
@@ -196,69 +190,39 @@ export default function AIChatbot() {
 
                             {/* Robot body */}
                             <div style={{ position: "relative" }}>
-                                {/* Glow under avatar */}
                                 <div style={{
-                                    position: "absolute",
-                                    bottom: -6, left: "50%",
+                                    position: "absolute", bottom: -6, left: "50%",
                                     transform: "translateX(-50%)",
                                     width: 60, height: 12,
                                     background: "rgba(0,255,255,0.25)",
-                                    borderRadius: "50%",
-                                    filter: "blur(6px)",
+                                    borderRadius: "50%", filter: "blur(6px)",
                                 }} />
-
                                 <svg width="72" height="88" viewBox="0 0 72 88" fill="none">
-                                    {/* Antenna */}
                                     <line x1="36" y1="4" x2="36" y2="14" stroke="#00ffff" strokeWidth="2"/>
-                                    <motion.circle
-                                        cx="36" cy="4" r="3"
-                                        fill="#00ffff"
+                                    <motion.circle cx="36" cy="4" r="3" fill="#00ffff"
                                         animate={{ opacity: [1, 0.3, 1], r: [3, 4, 3] }}
                                         transition={{ duration: 1.2, repeat: Infinity }}
                                     />
-
-                                    {/* Head */}
                                     <rect x="14" y="14" width="44" height="32" rx="8" fill="#0f172a" stroke="#00ffff" strokeWidth="1.5"/>
-
-                                    {/* Eyes */}
-                                    <motion.rect
-                                        x="21" y="24" width="10" height="7" rx="2"
-                                        fill="#00ffff"
-                                        animate={{ opacity: [1, 0.4, 1] }}
-                                        transition={{ duration: 3, repeat: Infinity, delay: 0 }}
+                                    <motion.rect x="21" y="24" width="10" height="7" rx="2" fill="#00ffff"
+                                        animate={{ opacity: [1, 0.4, 1] }} transition={{ duration: 3, repeat: Infinity }}
                                     />
-                                    <motion.rect
-                                        x="41" y="24" width="10" height="7" rx="2"
-                                        fill="#00ffff"
-                                        animate={{ opacity: [1, 0.4, 1] }}
-                                        transition={{ duration: 3, repeat: Infinity, delay: 0.2 }}
+                                    <motion.rect x="41" y="24" width="10" height="7" rx="2" fill="#00ffff"
+                                        animate={{ opacity: [1, 0.4, 1] }} transition={{ duration: 3, repeat: Infinity, delay: 0.2 }}
                                     />
-
-                                    {/* Smile */}
                                     <path d="M26 37 Q36 44 46 37" stroke="#00ffff" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-
-                                    {/* Neck */}
                                     <rect x="30" y="46" width="12" height="6" rx="2" fill="#0f172a" stroke="#475569" strokeWidth="1"/>
-
-                                    {/* Body */}
                                     <rect x="10" y="52" width="52" height="30" rx="8" fill="#0f172a" stroke="#9333ea" strokeWidth="1.5"/>
-
-                                    {/* Chest panel */}
                                     <rect x="20" y="60" width="32" height="14" rx="4" fill="#0a0a1a" stroke="#00ffff" strokeWidth="1" opacity="0.8"/>
                                     <motion.circle cx="28" cy="67" r="3" fill="#4ade80"
-                                        animate={{ opacity: [1, 0.3, 1] }}
-                                        transition={{ duration: 1.2, repeat: Infinity }}
+                                        animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.2, repeat: Infinity }}
                                     />
                                     <motion.circle cx="36" cy="67" r="3" fill="#00ffff"
-                                        animate={{ opacity: [0.5, 1, 0.5] }}
-                                        transition={{ duration: 0.8, repeat: Infinity }}
+                                        animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 0.8, repeat: Infinity }}
                                     />
                                     <motion.circle cx="44" cy="67" r="3" fill="#9333ea"
-                                        animate={{ opacity: [1, 0.4, 1] }}
-                                        transition={{ duration: 1.5, repeat: Infinity }}
+                                        animate={{ opacity: [1, 0.4, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
                                     />
-
-                                    {/* Legs */}
                                     <rect x="18" y="82" width="14" height="6" rx="3" fill="#1e293b" stroke="#475569" strokeWidth="1"/>
                                     <rect x="40" y="82" width="14" height="6" rx="3" fill="#1e293b" stroke="#475569" strokeWidth="1"/>
                                 </svg>
@@ -267,47 +231,6 @@ export default function AIChatbot() {
                     </motion.div>
                 )}
             </AnimatePresence>
-
-            {/* ── Compact FAB (shown after avatar dismissed or before avatar appears) ── */}
-            {!open && (avatarDismissed || !avatarVisible) && (
-                <div style={{
-                    position: "fixed",
-                    bottom: "1.75rem",
-                    right: "1.75rem",
-                    zIndex: 999,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                }}>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={pulsing ? { opacity: [0.7, 1, 0.7] } : { opacity: 1 }}
-                        transition={pulsing ? { duration: 2, repeat: Infinity } : { duration: 0.4 }}
-                        style={{ background: "rgba(0,0,0,0.9)", border: "1px solid rgba(0,255,255,0.3)", color: "#00ffff", fontFamily: "monospace", fontSize: "0.55rem", letterSpacing: "0.15em", padding: "0.3rem 0.75rem", borderRadius: "3px", whiteSpace: "nowrap", pointerEvents: "none" }}
-                    >✦ ASK RUPAM AI</motion.div>
-
-                    <motion.button
-                        id="ask-rupam-chatbot-btn"
-                        onClick={() => { setOpen(true); setPulsing(false); }}
-                        whileHover={{ scale: 1.12 }}
-                        whileTap={{ scale: 0.92 }}
-                        style={{ position: "relative", width: "64px", height: "64px", borderRadius: "50%", background: "radial-gradient(circle at 35% 35%, #0ff5ff18, #000)", border: "2px solid #00ffff", boxShadow: "0 0 24px rgba(0,255,255,0.45), 0 0 60px rgba(0,255,255,0.12)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-                        animate={pulsing ? { boxShadow: ["0 0 24px rgba(0,255,255,0.45)", "0 0 40px rgba(0,255,255,0.8)", "0 0 24px rgba(0,255,255,0.45)"] } : {}}
-                        transition={pulsing ? { duration: 2, repeat: Infinity } : {}}
-                    >
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00ffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M12 2a6 6 0 0 0-6 6c0 2.4 1.4 4.5 3.5 5.5V16h5v-2.5c2.1-1 3.5-3.1 3.5-5.5a6 6 0 0 0-6-6z"/>
-                                <path d="M8.5 16h7M10 19h4M11 22h2"/>
-                                <circle cx="9.5" cy="8.5" r="0.8" fill="#00ffff"/>
-                                <circle cx="14.5" cy="8.5" r="0.8" fill="#00ffff"/>
-                            </svg>
-                            <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.2, repeat: Infinity }} style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 8px #4ade80" }} />
-                        </div>
-                    </motion.button>
-                </div>
-            )}
 
 
             {/* Chat Panel */}
