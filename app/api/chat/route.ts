@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         }
 
         const completion = await openai.chat.completions.create({
-            model: "llama3-70b-8192", // Using Groq's Llama 3 70B model for high quality and speed
+            model: "llama-3.1-70b-versatile", // Updated to the latest supported Groq Llama model
             messages: [
                 {
                     role: "system",
