@@ -23,8 +23,20 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Invalid messages format" }, { status: 400 });
         }
 
+        // Dynamically fetch available models to prevent deprecation errors
+        const models = await openai.models.list();
+        // Prefer a llama-3.3 model, then llama-3.1, then anything else
+        let selectedModel = "llama3-8b-8192"; // Fallback
+        if (models.data && models.data.length > 0) {
+            const modelNames = models.data.map(m => m.id);
+            selectedModel = modelNames.find(m => m.includes("llama-3.3")) || 
+                            modelNames.find(m => m.includes("llama-3.1")) || 
+                            modelNames.find(m => m.includes("llama3")) || 
+                            modelNames[0];
+        }
+
         const completion = await openai.chat.completions.create({
-            model: "mixtral-8x7b-32768", // Using highly stable Mixtral 8x7B to avoid Llama model deprecations
+            model: selectedModel,
             messages: [
                 {
                     role: "system",
