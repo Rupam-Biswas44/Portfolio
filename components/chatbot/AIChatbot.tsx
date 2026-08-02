@@ -350,18 +350,30 @@ export default function AIChatbot() {
                         </div>
 
                         {/* Messages Area */}
-                        <div style={{
-                            flex: 1,
-                            overflowY: "auto",
-                            padding: "1rem",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.75rem",
-                            position: "relative",
-                            zIndex: 5,
-                            scrollbarWidth: "thin",
-                            scrollbarColor: "#1e293b transparent",
-                        }}>
+                        <div
+                            onWheel={(e) => {
+                                // Isolate scroll: only propagate to page if chat is already at its scroll limit
+                                const el = e.currentTarget;
+                                const atTop = el.scrollTop === 0 && e.deltaY < 0;
+                                const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight && e.deltaY > 0;
+                                if (!atTop && !atBottom) {
+                                    e.stopPropagation();
+                                }
+                            }}
+                            style={{
+                                flex: 1,
+                                overflowY: "auto",
+                                padding: "1rem",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "0.75rem",
+                                position: "relative",
+                                zIndex: 5,
+                                scrollbarWidth: "thin",
+                                scrollbarColor: "#1e293b transparent",
+                                overscrollBehavior: "contain",
+                            }}
+                        >
                             {/* Welcome + suggestions */}
                             {messages.length === 0 && (
                                 <motion.div
