@@ -5,15 +5,18 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
     try {
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = process.env.GROQ_API_KEY;
         if (!apiKey) {
             return NextResponse.json(
-                { error: "OpenAI API key not configured on server." },
+                { error: "Groq API key not configured on server." },
                 { status: 500 }
             );
         }
 
-        const openai = new OpenAI({ apiKey });
+        const openai = new OpenAI({ 
+            apiKey,
+            baseURL: "https://api.groq.com/openai/v1"
+        });
         const { messages, systemPrompt } = await req.json();
 
         if (!messages || !Array.isArray(messages)) {
@@ -21,7 +24,7 @@ export async function POST(req: NextRequest) {
         }
 
         const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
+            model: "llama3-70b-8192", // Using Groq's Llama 3 70B model for high quality and speed
             messages: [
                 {
                     role: "system",
