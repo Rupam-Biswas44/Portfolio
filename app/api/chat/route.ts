@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         }
 
         const completion = await openai.chat.completions.create({
-            model: "llama-3.1-70b-versatile", // Updated to the latest supported Groq Llama model
+            model: "mixtral-8x7b-32768", // Using highly stable Mixtral 8x7B to avoid Llama model deprecations
             messages: [
                 {
                     role: "system",
